@@ -13,15 +13,25 @@ import {useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 const Signin = () => {
+  const [email, setEmail] = useState('');  
+  const [phone, setPhone] = useState('');  
+
+    const [password, setPassword] = useState('');
+
   const [secureEntery, setSecureEntery] = useState(true);
   const navigation = useNavigation();
 
-  // const handleGoBack = () => {
-  //   navigation.goBack();
-  // };
-  // const handleSignup = () => {
-  //   navigation.navigate("SIGNUP");
-  // };
+  const handleAuth = () => {
+    if (email === '' || phone === '' || password === '') {
+      alert('Please fill in all fields (email, phone, and password).');
+    } else {
+     
+      alert('SignIn Successful');
+      navigation.navigate('Home'); 
+    }
+  };
+  
+
   const handleLogin = () => {
     navigation.navigate('Login');
   };
@@ -37,6 +47,8 @@ const Signin = () => {
             placeholder="Enter your Email"
             placeholderTextColor={colors.primary}
             keyboardType="email-address"
+            value={email}  
+            onChangeText={(text) => setEmail(text)}  
           />
         </View>
         <View style={styles.InputContainer}>
@@ -46,6 +58,8 @@ const Signin = () => {
             placeholderTextColor={colors.primary}
             secureTextEntry={secureEntery}
             keyboardType="phone-pad"
+            value={phone}  // Bind email state
+            onChangeText={(text) => setPhone(text)}  
           />
         </View>
         <View style={styles.InputContainer}>
@@ -54,6 +68,8 @@ const Signin = () => {
             placeholder="Enter your password"
             placeholderTextColor={colors.primary}
             secureTextEntry={secureEntery}
+            value={password}  // Bind password state
+            onChangeText={(text) => setPassword(text)}  
           />
           <TouchableOpacity
             onPress={() => {
@@ -63,7 +79,7 @@ const Signin = () => {
           </TouchableOpacity>
         </View>
 
-        <TouchableOpacity style={styles.loginButtonWrapper}>
+        <TouchableOpacity style={styles.loginButtonWrapper} onPress={handleAuth}>
           <Text style={styles.loginText}>Sign up</Text>
         </TouchableOpacity>
         <Text style={styles.continueText}>or continue with</Text>
@@ -84,7 +100,6 @@ const Signin = () => {
     </View>
   );
 };
-//onPress={handleSignup}
 export default Signin;
 
 const styles = StyleSheet.create({
@@ -120,7 +135,6 @@ const styles = StyleSheet.create({
   forgotPasswordText: {
     textAlign: 'right',
     color: colors.primary,
-    //fontFamily: fonts.SemiBold,
     marginVertical: 10,
     marginHorizontal: 10,
     fontWeight: 'bold',
@@ -135,7 +149,6 @@ const styles = StyleSheet.create({
   loginText: {
     color: colors.white,
     fontSize: 20,
-    // fontFamily: fonts.SemiBold,
     textAlign: 'center',
     padding: 10,
   },
@@ -143,7 +156,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginVertical: 20,
     fontSize: 14,
-    // fontFamily: fonts.Regular,
     color: colors.primary,
   },
   googleButtonContainer: {
@@ -163,7 +175,6 @@ const styles = StyleSheet.create({
   },
   googleText: {
     fontSize: 20,
-    // fontFamily: fonts.SemiBold,
   },
   footerContainer: {
     flexDirection: 'row',
@@ -174,14 +185,12 @@ const styles = StyleSheet.create({
   },
   accountText: {
     color: colors.primary,
-    //  fontFamily: fonts.Regular,
   },
 
   signupText: {
-    //  color: colors.primary,
-    // fontFamily: fonts.Bold,
-    fontWeight: 'bold', // Make the text bold
-    color: 'blue', // Set the color to blue (you can replace with any color)
+  
+    fontWeight: 'bold',
+    color: 'blue',
     fontSize: 18,
   },
 });

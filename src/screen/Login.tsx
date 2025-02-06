@@ -14,12 +14,21 @@ import {useNavigation} from '@react-navigation/native';
 
 const Login = () => {
   const navigation = useNavigation();
-
+  const [email, setEmail] = useState('');  
+  const [password, setPassword] = useState('');
   const [secureEntery, setSecureEntery] = useState(true);
-  // const handleGoBack = () => {
-  //   navigation.goBack();
-  // };
+  
+
   const handleSignin = () => {
+    if (email === 'alam@gmail.com' && password === '123') {
+      alert('Login Successful');
+      navigation.navigate('Login'); 
+    } else {
+      alert('Invalid email or password');
+    }
+  };
+
+  const handleSigninPage = () => {
     navigation.navigate('Signin');
   };
   return (
@@ -35,6 +44,9 @@ const Login = () => {
             placeholder="Enter your Email"
             placeholderTextColor={colors.primary}
             keyboardType="email-address"
+            value={email}  
+            onChangeText={(text) => setEmail(text)}  
+          
           />
         </View>
         <View style={styles.InputContainer}>
@@ -43,7 +55,10 @@ const Login = () => {
             placeholder="Enter your password"
             placeholderTextColor={colors.primary}
             secureTextEntry={secureEntery}
+            value={password}  // Bind password state
+            onChangeText={(text) => setPassword(text)}  
           />
+          
           <TouchableOpacity
             onPress={() => {
               setSecureEntery(prev => !prev);
@@ -54,7 +69,7 @@ const Login = () => {
         <TouchableOpacity>
           <Text style={styles.forgotPasswordText}>Forgot Password?</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.loginButtonWrapper}>
+        <TouchableOpacity style={styles.loginButtonWrapper} onPress={handleSignin}>>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
         <Text style={styles.continueText}>or continue with</Text>
@@ -67,7 +82,7 @@ const Login = () => {
         </TouchableOpacity>
         <View style={styles.footerContainer}>
           <Text style={styles.accountText}>Don’t have an account?</Text>
-          <TouchableOpacity onPress={handleSignin}>
+          <TouchableOpacity onPress={handleSigninPage}>
             <Text style={styles.signupText}>Sign up</Text>
           </TouchableOpacity>
         </View>
